@@ -1,0 +1,31 @@
+﻿<Application x:Class="FreelancingHelper.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:FreelancingHelper"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="DarkColor">#222225</Color>
+            <Color x:Key="CrimsonColor">#DC143C</Color>
+            
+            <SolidColorBrush x:Key="CrimsonSolid" Color="{StaticResource CrimsonColor}" />
+            <SolidColorBrush x:Key="DarkSolid" Color="{StaticResource DarkColor}" />
+
+            <Style x:Key="DefaultButton" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource CrimsonSolid}" />
+                <Setter Property="Foreground" Value="{StaticResource DarkSolid}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderThickness="0"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="5">
+                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

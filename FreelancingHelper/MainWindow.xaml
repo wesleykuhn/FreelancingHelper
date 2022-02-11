@@ -1,0 +1,66 @@
+﻿<Window x:Class="FreelancingHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:FreelancingHelper.ViewModels"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown"
+        WindowStyle="None"
+        FontFamily="Hack"
+        Title="Freelancing Helper"
+        Background="{StaticResource CrimsonSolid}"
+        Height="150"
+        Width="350">
+
+    <Window.Resources>
+        <viewModels:MainViewModel x:Key="mainViewModel" />
+    </Window.Resources>
+
+    <Border Margin="1" Background="{StaticResource DarkSolid}">
+        <Grid DataContext="{StaticResource ResourceKey=mainViewModel}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Button Background="{StaticResource CrimsonSolid}"
+                    Foreground="{StaticResource DarkSolid}"
+                    FontWeight="Bold"
+                    FontSize="22"
+                    Margin="5"
+                    Height="32"
+                    Width="90"
+                    Command="{Binding Path=StartPauseCommand}">
+                <Button.Style>
+                    <Style TargetType="Button"
+                           BasedOn="{StaticResource DefaultButton}">
+                        <Setter Property="Content" Value="Start" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Running}"
+                                             Value="True">
+                                <Setter Property="Content" Value="Pause"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <StackPanel Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Margin="10, 0, 0, 0">
+                <Label Content="{Binding ElapsedTimeString}"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource CrimsonSolid}"
+                       FontSize="32" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
