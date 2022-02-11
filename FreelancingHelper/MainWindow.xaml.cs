@@ -18,11 +18,5 @@ namespace FreelancingHelper
             if (e.ChangedButton == MouseButton.Left)
                 DragMove();
         }
-
-        //private void Window_StateChanged(object sender, System.EventArgs e)
-        //{
-        //    if (WindowState == WindowState.Minimized)
-        //        return;
-        //}
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace FreelancingHelper.Services.Settings
@@ -19,8 +20,12 @@ namespace FreelancingHelper.Services.Settings
             _serializatorService = serializatorService;
         }
 
-        public async Task LoadAppConfigurationAsync() =>
+        public async Task LoadAppConfigurationAsync()
+        {
             AppConfiguration = await _serializatorService.DesserializeAppConfigurationAsync();
+
+            LoadPrimaryColor();
+        }
 
         public async Task SaveAppConfigurationAsync() =>
             await _serializatorService.SerializeAppConfigurationAsync(AppConfiguration);
@@ -33,6 +38,13 @@ namespace FreelancingHelper.Services.Settings
             };
 
             await SaveAppConfigurationAsync();
+        }
+
+        private void LoadPrimaryColor()
+        {
+            Application.Current.Resources["PrimaryColor"] = AppConfiguration.PrimaryColor;
+
+            Application.Current.Resources["PrimarySolid"] = new SolidColorBrush(AppConfiguration.PrimaryColor);
         }
     }
 }

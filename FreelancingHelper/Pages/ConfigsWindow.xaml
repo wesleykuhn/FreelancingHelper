@@ -8,28 +8,40 @@
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
+        MouseDown="Window_MouseDown"
         FontFamily="Hack"
         Title="Freelancing Helper"
-        Background="{StaticResource CrimsonSolid}"
+        Background="{DynamicResource PrimarySolid}"
         Height="220"
         Width="350">
 
     <Border Margin="1"
-            Background="{StaticResource DarkSolid}"
+            Background="{DynamicResource DarkSolid}"
             Padding="2, 5">
-        <StackPanel HorizontalAlignment="Left">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Primary Color:" Foreground="{StaticResource CrimsonSolid}"/>
-                
-                <TextBox Text="{Binding PrimaryColorText}"
+        <StackPanel HorizontalAlignment="Stretch">
+            <StackPanel>
+                <Button Content="X"
+                        HorizontalAlignment="Right"
+                        Style="{StaticResource DefaultButton}"
+                        FontWeight="Bold"
+                        Margin="4, 0"
+                        Height="20"
+                        Width="20"
+                        Command="{Binding Path=CloseCommand}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Label Content="Primary Color:" Foreground="{DynamicResource PrimarySolid}"/>
+
+                <TextBox Text="{Binding PrimaryColorHex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Height="20"
-                         Width="60"
-                         MaxLength="7"
-                         Foreground="{StaticResource CrimsonSolid}"
+                         Width="70"
+                         MaxLength="8"
+                         Foreground="{DynamicResource PrimarySolid}"
                          HorizontalContentAlignment="Center"
                          VerticalContentAlignment="Center"
-                         Background="{StaticResource DarkSolid}"
-                         BorderBrush="{StaticResource CrimsonSolid}"/>
+                         Background="{DynamicResource DarkSolid}"
+                         BorderBrush="{DynamicResource PrimarySolid}"/>
             </StackPanel>
         </StackPanel>
     </Border>

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FreelancingHelper.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
         protected NavigationService Navigation => NavigationService.Current;
+
+        public Window BindedWindow;
 
         #region [ BUSY STATE ]
 

@@ -68,6 +68,7 @@ namespace FreelancingHelper.Services.Navigation
         private ValueTask BindViewModelWithWindowAndInit(BaseViewModel viewModel, Window window, object args)
         {
             window.DataContext = viewModel;
+            viewModel.BindedWindow = window;
 
             return new ValueTask(viewModel.InitAsync(args));
         }

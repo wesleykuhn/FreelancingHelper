@@ -3,10 +3,10 @@ using System.Windows.Input;
 
 namespace FreelancingHelper.CommandModels
 {
-    public class StartPauseCommandModel : ICommand
+    public class GenericCommandModel : ICommand
     {
         private Action _actionToExecute;
-        public StartPauseCommandModel(Action actionToExecute)
+        public GenericCommandModel(Action actionToExecute)
         {
             _actionToExecute =  actionToExecute;
         }

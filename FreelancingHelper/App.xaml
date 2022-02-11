@@ -6,14 +6,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <Color x:Key="DarkColor">#222225</Color>
-            <Color x:Key="CrimsonColor">#DC143C</Color>
-            
-            <SolidColorBrush x:Key="CrimsonSolid" Color="{StaticResource CrimsonColor}" />
-            <SolidColorBrush x:Key="DarkSolid" Color="{StaticResource DarkColor}" />
+            <Color x:Key="PrimaryColor">#DC143C</Color>
+
+            <SolidColorBrush x:Key="PrimarySolid" Color="{DynamicResource PrimaryColor}" />
+            <SolidColorBrush x:Key="DarkSolid" Color="{DynamicResource DarkColor}" />
 
             <Style x:Key="DefaultButton" TargetType="Button">
-                <Setter Property="Background" Value="{StaticResource CrimsonSolid}" />
-                <Setter Property="Foreground" Value="{StaticResource DarkSolid}" />
+                <Setter Property="Background" Value="{DynamicResource PrimarySolid}" />
+                <Setter Property="Foreground" Value="{DynamicResource DarkSolid}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">

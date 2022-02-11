@@ -11,7 +11,7 @@
         WindowStyle="None"
         FontFamily="Hack"
         Title="Freelancing Helper"
-        Background="{StaticResource CrimsonSolid}"
+        Background="{DynamicResource PrimarySolid}"
         Height="150"
         Width="350">
 
@@ -19,7 +19,7 @@
         <viewModels:MainViewModel x:Key="mainViewModel" />
     </Window.Resources>
 
-    <Border Margin="1" Background="{StaticResource DarkSolid}">
+    <Border Margin="1" Background="{DynamicResource DarkSolid}">
         <Grid DataContext="{StaticResource ResourceKey=mainViewModel}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -31,8 +31,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Background="{StaticResource CrimsonSolid}"
-                    Foreground="{StaticResource DarkSolid}"
+            <Button Background="{DynamicResource PrimarySolid}"
+                    Foreground="{DynamicResource DarkSolid}"
                     FontWeight="Bold"
                     FontSize="22"
                     Margin="5"
@@ -58,7 +58,7 @@
                         Margin="10, 0, 0, 0">
                 <Label Content="{Binding ElapsedTimeString}"
                        VerticalAlignment="Center"
-                       Foreground="{StaticResource CrimsonSolid}"
+                       Foreground="{DynamicResource PrimarySolid}"
                        FontSize="32" />
             </StackPanel>
         </Grid>
