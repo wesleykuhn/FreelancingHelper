@@ -31,7 +31,7 @@ namespace FreelancingHelper.ViewModels
 
         private string _oldTypedColorHexa;
 
-        private Color _newColor = default;
+        private Color _newColor = default(Color);
 
         private readonly ISettingsService _settingsService;
         public ConfigsViewModel()
@@ -67,11 +67,14 @@ namespace FreelancingHelper.ViewModels
             return Task.CompletedTask;
         }
 
-        private async Task CloseCommandExecute()
+        private async ValueTask CloseCommandExecute()
         {
-            _settingsService.AppConfiguration.PrimaryColor = _newColor;
+            if (_newColor != null && _newColor != default(Color))
+            {
+                _settingsService.AppConfiguration.PrimaryColor = _newColor;
 
-            await _settingsService.SaveAppConfigurationAsync();
+                await _settingsService.SaveAppConfigurationAsync();
+            }
 
             BindedWindow.Close();
         }
