@@ -18,7 +18,7 @@ namespace FreelancingHelper.ViewModels
         }
 
         private ICommand _startPauseCommand;
-        public ICommand StartPauseCommand => _startPauseCommand ??= new GenericCommandModel(async () => await StartPause());
+        public ICommand StartPauseCommand => _startPauseCommand ??= new GenericCommand(async () => await StartPause());
 
         #region [ TIMING CONTROL ]
 

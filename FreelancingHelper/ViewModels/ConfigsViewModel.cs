@@ -2,9 +2,6 @@
 using FreelancingHelper.Services.Settings;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -30,7 +27,7 @@ namespace FreelancingHelper.ViewModels
         }
 
         private ICommand _closeCommand;
-        public ICommand CloseCommand => _closeCommand ??= new GenericCommandModel(async () => await CloseCommandExecute());
+        public ICommand CloseCommand => _closeCommand ??= new GenericCommand(async () => await CloseCommandExecute());
 
         private string _oldTypedColorHexa;
 

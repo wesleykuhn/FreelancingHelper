@@ -7,9 +7,11 @@
         <ResourceDictionary>
             <Color x:Key="DarkColor">#222225</Color>
             <Color x:Key="PrimaryColor">#DC143C</Color>
+            <Color x:Key="PrimaryTransp4Color">#44DC143C</Color>
 
-            <SolidColorBrush x:Key="PrimarySolid" Color="{DynamicResource PrimaryColor}" />
             <SolidColorBrush x:Key="DarkSolid" Color="{DynamicResource DarkColor}" />
+            <SolidColorBrush x:Key="PrimarySolid" Color="{DynamicResource PrimaryColor}" />
+            <SolidColorBrush x:Key="PrimaryTransp4Solid" Color="{DynamicResource PrimaryTransp4Color}" />
 
             <Style x:Key="DefaultButton" TargetType="Button">
                 <Setter Property="Background" Value="{DynamicResource PrimarySolid}" />
