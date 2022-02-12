@@ -1,20 +1,16 @@
-﻿<Window x:Class="FreelancingHelper.Pages.ConfigsWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:components="clr-namespace:FreelancingHelper.Components"
-        mc:Ignorable="d"
-        x:Name="this"
-        ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        MouseDown="Window_MouseDown"
-        FontFamily="Hack"
-        Title="Configurations"
-        Background="{DynamicResource PrimarySolid}"
-        Height="220"
-        Width="350">
+﻿<pages:BaseWindow x:Class="FreelancingHelper.Pages.ConfigsWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:components="clr-namespace:FreelancingHelper.Components"
+                  xmlns:pages="clr-namespace:FreelancingHelper.Pages"
+                  mc:Ignorable="d"
+                  x:Name="this"
+                  Title="Configurations"
+                  Height="220"
+                  Width="350"
+                  Background="{DynamicResource PrimarySolid}">
 
     <Border Margin="1"
             Background="{DynamicResource DarkSolid}">
@@ -54,4 +50,4 @@
             </StackPanel>
         </StackPanel>
     </Border>
-</Window>
+</pages:BaseWindow>
