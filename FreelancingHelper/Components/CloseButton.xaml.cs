@@ -22,10 +22,5 @@ namespace FreelancingHelper.Components
             get => (ICommand)GetValue(ClickCommandProperty);
             set => SetValue(ClickCommandProperty, value);
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ClickCommand.Execute(null);
-        }
     }
 }

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:FreelancingHelper.ViewModels"
         xmlns:components="clr-namespace:FreelancingHelper.Components"
         mc:Ignorable="d"
         x:Name="this"
@@ -21,29 +20,37 @@
             Background="{DynamicResource DarkSolid}">
         <StackPanel>
             <StackPanel HorizontalAlignment="Stretch">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <Grid>
                     <components:TitleBar Title="{Binding Title, ElementName=this}"
                                          HorizontalAlignment="Left"/>
 
                     <components:CloseButton ClickCommand="{Binding Path=CloseCommand}"
+                                            VerticalAlignment="Center"
+                                            Margin="0, 0, 2, 0"
                                             HorizontalAlignment="Right" />
-                </StackPanel>
+                </Grid>
 
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Left"
-                            Margin="4, 0, 0, 0">
-                    <Label Content="Primary Color:" Foreground="{DynamicResource PrimarySolid}"/>
+                <Label Content="Colors"
+                       FontSize="8" />
+                <Border Margin="10"
+                        Padding="5"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource PrimaryTransp4Solid}">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left">
+                        <Label Content="Primary Color:" Foreground="{DynamicResource PrimarySolid}"/>
 
-                    <TextBox Text="{Binding PrimaryColorHex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             Height="20"
-                             Width="70"
-                             MaxLength="8"
-                             Foreground="{DynamicResource PrimarySolid}"
-                             HorizontalContentAlignment="Center"
-                             VerticalContentAlignment="Center"
-                             Background="{DynamicResource DarkSolid}"
-                             BorderBrush="{DynamicResource PrimarySolid}"/>
-                </StackPanel>
+                        <TextBox Text="{Binding PrimaryColorHex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Height="20"
+                                 Width="70"
+                                 MaxLength="8"
+                                 Foreground="{DynamicResource PrimarySolid}"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Background="{DynamicResource DarkSolid}"
+                                 BorderBrush="{DynamicResource PrimarySolid}"/>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </StackPanel>
     </Border>
