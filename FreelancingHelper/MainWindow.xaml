@@ -1,33 +1,31 @@
-﻿<Window x:Class="FreelancingHelper.MainWindow"
+﻿<pages:BaseWindow x:Class="FreelancingHelper.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:FreelancingHelper.ViewModels"
+        xmlns:pages="clr-namespace:FreelancingHelper.Pages"
         mc:Ignorable="d"
-        ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen"
-        MouseDown="Window_MouseDown"
-        WindowStyle="None"
-        FontFamily="Hack"
         Title="Freelancing Helper"
-        Background="{DynamicResource PrimarySolid}"
         Height="150"
-        Width="350">
+        Width="350"
+        Background="{DynamicResource PrimarySolid}">
 
-    <Window.Resources>
+    <pages:BaseWindow.Resources>
         <viewModels:MainViewModel x:Key="mainViewModel" />
-    </Window.Resources>
+    </pages:BaseWindow.Resources>
 
     <Border Margin="1" Background="{DynamicResource DarkSolid}">
         <Grid DataContext="{StaticResource ResourceKey=mainViewModel}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -61,6 +59,20 @@
                        Foreground="{DynamicResource PrimarySolid}"
                        FontSize="32" />
             </StackPanel>
+
+            <StackPanel Grid.Column="2"
+                        Grid.Row="2"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right">
+                <Button Content="🛠️"
+                        Margin="0, 0, 1, 1"
+                        FontSize="16"
+                        Cursor="Hand"
+                        Background="{DynamicResource DarkSolid}"
+                        Foreground="{DynamicResource PrimarySolid}"
+                        BorderThickness="0"
+                        Command="{Binding Path=OpenConfigsCommand}"/>
+            </StackPanel>
         </Grid>
     </Border>
-</Window>
+</pages:BaseWindow>

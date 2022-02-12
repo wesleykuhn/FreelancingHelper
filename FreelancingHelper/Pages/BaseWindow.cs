@@ -16,7 +16,7 @@ namespace FreelancingHelper.Pages
         public BaseWindow()
         {
             ResizeMode = ResizeMode.CanMinimize;
-            WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             MouseDown += BaseWindow_MouseDown;
             WindowStyle = WindowStyle.None;
 

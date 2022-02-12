@@ -16,6 +16,7 @@
             <Style x:Key="DefaultButton" TargetType="Button">
                 <Setter Property="Background" Value="{DynamicResource PrimarySolid}" />
                 <Setter Property="Foreground" Value="{DynamicResource DarkSolid}" />
+                <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">

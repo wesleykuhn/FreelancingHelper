@@ -1,9 +1,7 @@
 ﻿using FreelancingHelper.CommandModels;
 using FreelancingHelper.Services.Settings;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -20,7 +18,7 @@ namespace FreelancingHelper.ViewModels
                 SetProperty(ref _primaryColorHex, value);
 
                 if (value != _oldTypedColorHexa && value.Length == 8)
-                    TryChangePrimaryColor();
+                    _newColor = _settingsService.TrySetAppsPrimaryColorFromHexa(PrimaryColorHex);
                 else
                     _newColor = default;
             }
@@ -39,24 +37,6 @@ namespace FreelancingHelper.ViewModels
             _settingsService = App.ServiceProvider.GetService<ISettingsService>();
         }
 
-        private void TryChangePrimaryColor()
-        {
-            try
-            {
-                _newColor = (Color)ColorConverter.ConvertFromString($"#{PrimaryColorHex}");
-
-                Application.Current.Resources["PrimaryColor"] = _newColor;
-
-                Application.Current.Resources["PrimarySolid"] = new SolidColorBrush(_newColor);
-            }
-            catch (Exception)
-            {
-                _newColor = default;
-
-                return;
-            }
-        }
-
         public override Task InitAsync(object args = null)
         {
             var curBrush = new SolidColorBrush(_settingsService.AppConfiguration.PrimaryColor);
@@ -69,12 +49,8 @@ namespace FreelancingHelper.ViewModels
 
         private async ValueTask CloseCommandExecute()
         {
-            if (_newColor != null && _newColor != default(Color))
-            {
-                _settingsService.AppConfiguration.PrimaryColor = _newColor;
-
-                await _settingsService.SaveAppConfigurationAsync();
-            }
+            if (_newColor != default(Color))
+                await _settingsService.SaveAppsPrimaryColor(_newColor);
 
             BindedWindow.Close();
         }

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using FreelancingHelper.Pages;
+using System.Windows;
 using System.Windows.Input;
 
 namespace FreelancingHelper
@@ -6,7 +7,7 @@ namespace FreelancingHelper
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : BaseWindow
     {
         public MainWindow()
         {

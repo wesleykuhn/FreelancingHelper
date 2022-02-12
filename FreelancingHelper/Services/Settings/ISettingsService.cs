@@ -1,5 +1,6 @@
 ﻿using FreelancingHelper.Models;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace FreelancingHelper.Services.Settings
 {
@@ -10,5 +11,7 @@ namespace FreelancingHelper.Services.Settings
         Task LoadAppConfigurationAsync();
         Task SaveAppConfigurationAsync();
         Task GenerateDefaultAppConfiguration();
+        Color TrySetAppsPrimaryColorFromHexa(string newColorHexa);
+        Task SaveAppsPrimaryColor(Color newColor);
     }
 }

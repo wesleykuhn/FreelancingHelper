@@ -1,5 +1,4 @@
 ﻿using FreelancingHelper.CommandModels;
-using FreelancingHelper.Pages;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -18,7 +17,10 @@ namespace FreelancingHelper.ViewModels
         }
 
         private ICommand _startPauseCommand;
-        public ICommand StartPauseCommand => _startPauseCommand ??= new GenericCommand(async () => await StartPause());
+        public ICommand StartPauseCommand => _startPauseCommand ??= new GenericCommand(StartPauseCommandExecute);
+
+        private ICommand _openConfigsCommand;
+        public ICommand OpenConfigsCommand => _openConfigsCommand ??= new GenericCommand(async () => await OpenConfigsCommandExecute());
 
         #region [ TIMING CONTROL ]
 
@@ -48,25 +50,31 @@ namespace FreelancingHelper.ViewModels
             _timer.Elapsed += OnTimerIntervalElapsed;
         }
 
-        private async Task StartPause()
+        private async Task OpenConfigsCommandExecute()
         {
-            await Navigation.ShowWindow<ConfigsViewModel>(36);
-            //if (!_running)
-            //{
-            //    Running = true;
+            await Navigation.ShowWindow<ConfigsViewModel>();
+        }
 
-            //    _totalTimeWatcher.Start(); //Total
-            //    _deltaWatcher.Start();     //Delta
-            //    _timer.Start();            //TIMER
-            //}
-            //else
-            //{
-            //    Running = false;
+        #region [ TIME HANDLING ]
 
-            //    _totalTimeWatcher.Stop();
-            //    _deltaWatcher.Stop();
-            //    _timer.Stop();
-            //}
+        private void StartPauseCommandExecute()
+        {
+            if (!_running)
+            {
+                Running = true;
+
+                _totalTimeWatcher.Start(); //Total
+                _deltaWatcher.Start();     //Delta
+                _timer.Start();            //TIMER
+            }
+            else
+            {
+                Running = false;
+
+                _totalTimeWatcher.Stop();
+                _deltaWatcher.Stop();
+                _timer.Stop();
+            }
         }
 
         private void OnTimerIntervalElapsed(object sender, ElapsedEventArgs e)
@@ -92,5 +100,7 @@ namespace FreelancingHelper.ViewModels
 
             _deltaWatcher.Start();
         }
+
+        #endregion
     }
 }

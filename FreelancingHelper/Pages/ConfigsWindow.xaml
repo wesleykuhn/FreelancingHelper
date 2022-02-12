@@ -22,14 +22,11 @@
 
                     <components:CloseButton ClickCommand="{Binding Path=CloseCommand}"
                                             VerticalAlignment="Center"
-                                            Margin="0, 0, 2, 0"
+                                            Margin="0, 0, 1, 0"
                                             HorizontalAlignment="Right" />
                 </Grid>
 
-                <Label Content="Colors"
-                       FontSize="8" />
-                <Border Margin="10"
-                        Padding="5"
+                <Border Margin="5"
                         BorderThickness="1"
                         BorderBrush="{DynamicResource PrimaryTransp4Solid}">
                     <StackPanel Orientation="Horizontal"
