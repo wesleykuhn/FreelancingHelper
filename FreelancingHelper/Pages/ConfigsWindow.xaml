@@ -21,8 +21,7 @@
                                          HorizontalAlignment="Left"/>
 
                     <components:CloseButton ClickCommand="{Binding Path=CloseCommand}"
-                                            VerticalAlignment="Center"
-                                            Margin="0, 0, 1, 0"
+                                            VerticalAlignment="Top"
                                             HorizontalAlignment="Right" />
                 </Grid>
 

@@ -5,6 +5,10 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <FontFamily x:Key="FontAwesomeSolid">/Fonts/FontAwesome/fa-solid-900.ttf#Font Awesome 6 Free Solid</FontFamily>
+            <FontFamily x:Key="FontAwesomeBrands">/Fonts/FontAwesome/fa-brands-400.ttf#Font Awesome 6 Free Brands</FontFamily>
+            <FontFamily x:Key="FontAwesomeRegular">/Fonts/FontAwesome/fa-regular-400.ttf#Font Awesome 6 Free Regular</FontFamily>
+            
             <Color x:Key="DarkColor">#222225</Color>
             <Color x:Key="PrimaryColor">#DC143C</Color>
             <Color x:Key="PrimaryTransp4Color">#44DC143C</Color>
@@ -16,6 +20,7 @@
             <Style x:Key="DefaultButton" TargetType="Button">
                 <Setter Property="Background" Value="{DynamicResource PrimarySolid}" />
                 <Setter Property="Foreground" Value="{DynamicResource DarkSolid}" />
+                <Setter Property="ToolTipService.InitialShowDelay" Value="200" />
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Template">
                     <Setter.Value>
@@ -25,6 +30,32 @@
                                     CornerRadius="5">
                                 <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="DefaultListView" TargetType="ListView">
+                <Setter Property="Background" Value="{DynamicResource DarkSolid}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Style>
+
+            <Style x:Key="DefaultListViewHeader" TargetType="GridViewColumnHeader">
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Background" Value="{DynamicResource PrimaryTransp4Solid}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewColumnHeader">
+                            <Grid Background="{DynamicResource PrimaryTransp4Solid}">
+                                <Label Content="{TemplateBinding Content}"
+                                       Foreground="{DynamicResource PrimarySolid}"
+                                       FontSize="12" />
+
+                                <Rectangle HorizontalAlignment="Right"
+                                           Width="2"
+                                           Fill="{DynamicResource PrimarySolid}" />
+                            </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>

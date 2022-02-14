@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using System.Windows.Input;
 
 namespace FreelancingHelper.ViewModels
@@ -17,10 +18,16 @@ namespace FreelancingHelper.ViewModels
         }
 
         private ICommand _startPauseCommand;
-        public ICommand StartPauseCommand => _startPauseCommand ??= new GenericCommand(StartPauseCommandExecute);
+        public ICommand StartPauseCommand => _startPauseCommand ??= new BasicCommand(StartPauseCommandExecute);
 
         private ICommand _openConfigsCommand;
-        public ICommand OpenConfigsCommand => _openConfigsCommand ??= new GenericCommand(async () => await OpenConfigsCommandExecute());
+        public ICommand OpenConfigsCommand => _openConfigsCommand ??= new BasicCommand(async () => await OpenConfigsCommandExecute());
+
+        private ICommand _closeCommand;
+        public ICommand CloseCommand => _closeCommand ??= new BasicCommand(CloseCommandExecute);
+
+        private ICommand _openHirersManagerCommand;
+        public ICommand OpenHirersManagerCommand => _openHirersManagerCommand ??=  new BasicCommand(async () => await OpenHirersManagerCommandExecute());
 
         #region [ TIMING CONTROL ]
 
@@ -39,20 +46,21 @@ namespace FreelancingHelper.ViewModels
 
         #endregion
 
-        #region [ UI CONTROL ]
-
-        internal bool WindowIsVisible;
-
-        #endregion
-
         public MainViewModel()
         {
+            Navigation.TrySetupNavigationStack(this);
+
             _timer.Elapsed += OnTimerIntervalElapsed;
         }
 
         private async Task OpenConfigsCommandExecute()
         {
-            await Navigation.ShowWindow<ConfigsViewModel>();
+            await Navigation.Go<ConfigsViewModel>();
+        }
+
+        private async Task OpenHirersManagerCommandExecute()
+        {
+            await Navigation.Go<HirersManagerViewModel>();
         }
 
         #region [ TIME HANDLING ]
@@ -99,6 +107,18 @@ namespace FreelancingHelper.ViewModels
             _deltaWatcher.Reset();
 
             _deltaWatcher.Start();
+        }
+
+        #endregion
+
+        #region [ WINDOW CONTROL ]
+
+        private void CloseCommandExecute()
+        {
+            var conf = MessageBox.Show("Do you really want to close the program?", "CONFIRMATION", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (conf == MessageBoxResult.Yes)
+                Application.Current.Shutdown();
         }
 
         #endregion

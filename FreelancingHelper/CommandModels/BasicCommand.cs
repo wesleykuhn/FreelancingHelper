@@ -3,14 +3,14 @@ using System.Windows.Input;
 
 namespace FreelancingHelper.CommandModels
 {
-    public class GenericCommand : ICommand
+    public class BasicCommand : ICommand
     {
         private Action _actionToExecute;
         private Func<bool> _canExecuteEvaluator;
 
-        public GenericCommand(Action actionToExecute) : this(actionToExecute, null) { }
+        public BasicCommand(Action actionToExecute) : this(actionToExecute, null) { }
 
-        public GenericCommand(Action actionToExecute, Func<bool> canExecuteAction)
+        public BasicCommand(Action actionToExecute, Func<bool> canExecuteAction)
         {
             _actionToExecute =  actionToExecute;
             _canExecuteEvaluator = canExecuteAction;

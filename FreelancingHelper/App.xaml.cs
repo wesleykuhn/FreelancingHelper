@@ -4,8 +4,6 @@ using FreelancingHelper.Services.Settings;
 using FreelancingHelper.Services.Startup;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
-using System.Linq;
-using System;
 
 namespace FreelancingHelper
 {

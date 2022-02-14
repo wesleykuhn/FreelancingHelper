@@ -10,6 +10,7 @@ namespace FreelancingHelper.Services.Settings
     public class SettingsService : ISettingsService
     {
         public AppConfiguration AppConfiguration { get; private set; }
+        //public DayWork
 
         private readonly ISerializatorService _serializatorService;
         public SettingsService(ISerializatorService serializatorService)
@@ -31,7 +32,7 @@ namespace FreelancingHelper.Services.Settings
         {
             AppConfiguration = new AppConfiguration
             {
-                PrimaryColor = Color.FromRgb(Constants.DefaultCrimsonPrimaryColorR, Constants.DefaultCrimsonPrimaryColorG, Constants.DefaultCrimsonPrimaryColorB)
+                PrimaryColor = Color.FromRgb(ConstantsAndSettings.DefaultCrimsonPrimaryColorR, ConstantsAndSettings.DefaultCrimsonPrimaryColorG, ConstantsAndSettings.DefaultCrimsonPrimaryColorB)
             };
 
             await SaveAppConfigurationAsync();

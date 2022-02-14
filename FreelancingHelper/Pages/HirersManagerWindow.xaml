@@ -1,0 +1,76 @@
+﻿<pages:BaseWindow x:Class="FreelancingHelper.Pages.HirersManagerWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:local="clr-namespace:FreelancingHelper.Pages"
+                  xmlns:pages="clr-namespace:FreelancingHelper.Pages"
+                  xmlns:components="clr-namespace:FreelancingHelper.Components"
+                  xmlns:viewModels="clr-namespace:FreelancingHelper.ViewModels"
+                  mc:Ignorable="d"
+                  x:Name="this"
+                  Title="Managing Hirers"
+                  Height="450"
+                  Width="800"
+                  Background="{DynamicResource PrimarySolid}">
+    <pages:BaseWindow.DataContext>
+        <viewModels:HirersManagerViewModel />
+    </pages:BaseWindow.DataContext>
+    <Border Margin="1"
+            Background="{DynamicResource DarkSolid}">
+        <StackPanel HorizontalAlignment="Stretch">
+            <Grid>
+                <components:TitleBar Title="{Binding Title, ElementName=this}"
+                                         HorizontalAlignment="Left"/>
+
+                <components:CloseButton ClickCommand="{Binding Path=CloseCommand}"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Right" />
+            </Grid>
+
+            <Border Margin="5"
+                    BorderThickness="1"
+                    BorderBrush="{DynamicResource PrimaryTransp4Solid}">
+                <StackPanel Margin="10">
+                    <Button Content="Add"
+                            Style="{StaticResource DefaultButton}"
+                            Width="60"
+                            Height="20"
+                            HorizontalAlignment="Left"/>
+
+                    <ListView ItemsSource="{Binding AllHirers}"
+                              Style="{StaticResource DefaultListView}"
+                              Margin="0, 5">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="true">
+                                <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
+                                                DisplayMemberBinding="{Binding Path=Name}"
+                                                Header="Id"
+                                                Width="100">
+                                </GridViewColumn>
+
+                                <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
+                                                DisplayMemberBinding="{Binding Path=Name}"
+                                                Width="300">
+                                    <GridViewColumnHeader Content="Name">
+                                        <GridViewColumnHeader.ContextMenu>
+                                            <ContextMenu MenuItem.Click="NameCM_Click" Name="NameCM">
+                                                <MenuItem Header="Ascending" />
+                                                <MenuItem Header="Descending" />
+                                            </ContextMenu>
+                                        </GridViewColumnHeader.ContextMenu>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+
+                                <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
+                                                DisplayMemberBinding="{Binding Path=Email}"
+                                                Header="E-mail"
+                                                Width="365"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Border>
+</pages:BaseWindow>

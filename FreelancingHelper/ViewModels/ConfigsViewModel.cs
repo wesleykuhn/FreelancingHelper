@@ -25,7 +25,7 @@ namespace FreelancingHelper.ViewModels
         }
 
         private ICommand _closeCommand;
-        public ICommand CloseCommand => _closeCommand ??= new GenericCommand(async () => await CloseCommandExecute());
+        public ICommand CloseCommand => _closeCommand ??= new BasicCommand(async () => await CloseCommandExecute());
 
         private string _oldTypedColorHexa;
 

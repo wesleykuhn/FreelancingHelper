@@ -5,13 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" >
 
-    <StackPanel DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}">
-        <Button Content="X"
-                Style="{StaticResource DefaultButton}"
+    <Border DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+            CornerRadius="0, 0, 0, 5"
+            Padding="2, 0, 0, 2"
+            Background="{DynamicResource PrimarySolid}">
+        <Button Content="&#xf00d;"
                 FontWeight="Bold"
+                Style="{StaticResource DefaultButton}"
+                FontFamily="{StaticResource FontAwesomeSolid}"
                 Cursor="Hand"
-                Height="22"
-                Width="22"
+                FontSize="14"
+                Height="20"
+                Width="20"
+                BorderThickness="0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="{DynamicResource PrimarySolid}"
+                Foreground="{DynamicResource DarkSolid}"
                 Command="{Binding ClickCommand}"/>
-    </StackPanel>
+    </Border>
 </UserControl>

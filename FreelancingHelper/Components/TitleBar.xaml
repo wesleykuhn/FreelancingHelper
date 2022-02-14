@@ -5,22 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" >
 
-    <StackPanel DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
-                Orientation="Horizontal"
-                HorizontalAlignment="Left"
-                Height="24">
-        <StackPanel Background="{DynamicResource PrimarySolid}">
+    <Grid DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+          HorizontalAlignment="Left"
+          Height="24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0"
+                    Background="{DynamicResource PrimarySolid}">
             <Label Content="{Binding Title}"
-               FontWeight="SemiBold"
-               Foreground="{DynamicResource DarkSolid}"/>
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource DarkSolid}"/>
         </StackPanel>
-        
-        <Polygon HorizontalAlignment="Right"
+
+        <!-- Didnt find any other better solution to fix this render bug -->
+        <StackPanel Grid.Column="1"
+                    Height="22.1"
+                    Width="2"
+                    Margin="-1, 0, 0, 0"
+                    HorizontalAlignment="Left"
+                    Background="{DynamicResource PrimarySolid}" />
+
+        <Polygon Grid.Column="1"
+                 HorizontalAlignment="Right"
                  VerticalAlignment="Bottom"
                  Points="0,0 28,0, 0,28"
-                 Margin="0, 0, 0, 0"
-                 RenderOptions.EdgeMode="Aliased"
                  Stroke="{DynamicResource PrimarySolid}"
                  Fill="{DynamicResource PrimarySolid}" />
-    </StackPanel>
+    </Grid>
 </UserControl>
