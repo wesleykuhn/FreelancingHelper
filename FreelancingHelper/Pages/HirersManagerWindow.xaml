@@ -3,19 +3,16 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                  xmlns:local="clr-namespace:FreelancingHelper.Pages"
                   xmlns:pages="clr-namespace:FreelancingHelper.Pages"
                   xmlns:components="clr-namespace:FreelancingHelper.Components"
-                  xmlns:viewModels="clr-namespace:FreelancingHelper.ViewModels"
+                  xmlns:customControls="clr-namespace:FreelancingHelper.CustomControls"
                   mc:Ignorable="d"
                   x:Name="this"
                   Title="Managing Hirers"
                   Height="450"
                   Width="800"
                   Background="{DynamicResource PrimarySolid}">
-    <pages:BaseWindow.DataContext>
-        <viewModels:HirersManagerViewModel />
-    </pages:BaseWindow.DataContext>
+
     <Border Margin="1"
             Background="{DynamicResource DarkSolid}">
         <StackPanel HorizontalAlignment="Stretch">
@@ -36,16 +33,21 @@
                             Style="{StaticResource DefaultButton}"
                             Width="60"
                             Height="20"
-                            HorizontalAlignment="Left"/>
+                            HorizontalAlignment="Left"
+                            Command="{Binding Path=OpenNewHirerCommand}"/>
 
-                    <ListView ItemsSource="{Binding AllHirers}"
-                              Style="{StaticResource DefaultListView}"
-                              Margin="0, 5">
-                        <ListView.View>
+                    <customControls:CustomListView ItemsSource="{Binding AllHirers}"
+                                                   Margin="0, 5"
+                                                   Height="300"
+                                                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                   Style="{StaticResource DefaultListView}"
+                                                   ItemDoubleClickedCommand="{Binding Path=HirerDoubleClickCommand}"
+                                                   ItemRightClickedCommand="{Binding Path=HirerRightClickCommand}">
+                        <customControls:CustomListView.View>
                             <GridView AllowsColumnReorder="true">
                                 <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
-                                                DisplayMemberBinding="{Binding Path=Name}"
-                                                Header="Id"
+                                                DisplayMemberBinding="{Binding Path=Id}"
+                                                Header="ID"
                                                 Width="100">
                                 </GridViewColumn>
 
@@ -67,8 +69,25 @@
                                                 Header="E-mail"
                                                 Width="365"/>
                             </GridView>
-                        </ListView.View>
-                    </ListView>
+                        </customControls:CustomListView.View>
+                    </customControls:CustomListView>
+
+                    <customControls:CustomComboBox ItemsSource="{Binding AllHirers}"
+                                                   Style="{StaticResource DefaultComboBox}"
+                                                   Background="{DynamicResource DarkSolid}"
+                                                   ItemContainerStyle="{StaticResource DefaultComboBoxItem}"
+                                                   SelectedChangedCommand="{Binding Path=CurHirerChangedCommand}"
+                                                   SelectedItem="{Binding SelectedHirerComboBox}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Background="{DynamicResource DarkSolid}">
+                                    <Label Content="{Binding .}"
+                                           FontSize="12"
+                                           Foreground="{DynamicResource PrimarySolid}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </customControls:CustomComboBox>
                 </StackPanel>
             </Border>
         </StackPanel>

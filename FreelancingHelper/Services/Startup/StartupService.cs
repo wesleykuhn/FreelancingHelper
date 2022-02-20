@@ -27,7 +27,8 @@ namespace FreelancingHelper.Services.Startup
 
         private void CheckDirectories()
         {
-            CheckAndCreateDirectory(_directoryService.HistoryFilesDir);
+            CheckAndCreateDirectory(_directoryService.DaysWorkDir);
+            CheckAndCreateDirectory(_directoryService.HirersDir);
         }
 
         private void CheckAndCreateDirectory(string dir)

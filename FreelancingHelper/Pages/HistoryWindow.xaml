@@ -1,0 +1,101 @@
+﻿<pages:BaseWindow x:Class="FreelancingHelper.Pages.HistoryWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:pages="clr-namespace:FreelancingHelper.Pages"
+                  mc:Ignorable="d"
+                  xmlns:components="clr-namespace:FreelancingHelper.Components"
+                  xmlns:customControls="clr-namespace:FreelancingHelper.CustomControls"
+                  Title="History"
+                  Height="400"
+                  Width="900"
+                  Background="{DynamicResource PrimarySolid}">
+    
+    <Border Margin="1" Background="{DynamicResource DarkSolid}">
+        <StackPanel>
+            <Grid VerticalAlignment="Top">
+                <components:TitleBar DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                                         Title="{Binding Title}"
+                                         HorizontalAlignment="Left"/>
+
+                <components:CloseButton ClickCommand="{Binding Path=CloseCommand}"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right" />
+            </Grid>
+
+            <StackPanel>
+                <ProgressBar IsIndeterminate="True"
+                         Width="200"
+                         Height="20"
+                         BorderBrush="{DynamicResource PrimaryTransp4Solid}"
+                         Background="{DynamicResource DarkSolid}"
+                         Foreground="{DynamicResource PrimarySolid}">
+                    <ProgressBar.Style>
+                        <Style TargetType="ProgressBar">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsBusy}" Value="False">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ProgressBar.Style>
+                </ProgressBar>
+
+                <Border Margin="5"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource PrimaryTransp4Solid}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Visibility" Value="Hidden" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsBusy}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    
+                    <StackPanel Margin="5">
+                        <customControls:CustomListView ItemsSource="{Binding AllDaysWork}"
+                                                       Margin="0, 5"
+                                                       Height="300"
+                                                       Style="{StaticResource DefaultListView}"
+                                                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                       ItemDoubleClickedCommand="{Binding Path=DayWorkDoubleClickCommand}">
+                            <customControls:CustomListView.View>
+                                <GridView AllowsColumnReorder="true">
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
+                                                    DisplayMemberBinding="{Binding Path=Id}"
+                                                    Header="ID"
+                                                    Width="70"/>
+
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
+                                                    DisplayMemberBinding="{Binding Path=HirerId, Converter={StaticResource HirerIdToStringConverter}}"
+                                                    Header="Hirer"
+                                                    Width="366" />
+
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
+                                                    DisplayMemberBinding="{Binding Path=Started, Converter={StaticResource ToStringConverter}}"
+                                                    Header="Started At"
+                                                    Width="176"/>
+
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
+                                                    DisplayMemberBinding="{Binding Path=Finished, Converter={StaticResource ToStringConverter}}"
+                                                    Header="Finished At"
+                                                    Width="176"/>
+
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
+                                                    DisplayMemberBinding="{Binding Path=TotalWorkingTime, Converter={StaticResource ToStringConverter}}"
+                                                    Header="Total Time"
+                                                    Width="86"/>
+                                </GridView>
+                            </customControls:CustomListView.View>
+                        </customControls:CustomListView>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</pages:BaseWindow>

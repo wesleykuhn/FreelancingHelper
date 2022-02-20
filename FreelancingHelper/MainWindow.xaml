@@ -6,153 +6,226 @@
                   xmlns:viewModels="clr-namespace:FreelancingHelper.ViewModels"
                   xmlns:pages="clr-namespace:FreelancingHelper.Pages"
                   xmlns:components="clr-namespace:FreelancingHelper.Components"
+                  Loaded="MainWindow_Loaded"
                   mc:Ignorable="d"
                   Title="Freelancing Helper"
-                  Height="150"
+                  Height="100"
                   Width="350"
                   Background="{DynamicResource PrimarySolid}">
 
     <Border Margin="1" Background="{DynamicResource DarkSolid}">
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Column="0"
-                  Grid.Row="0"
-                  Grid.ColumnSpan="4">
-                <components:TitleBar DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                                     Title="{Binding Title}"
-                                     HorizontalAlignment="Left"/>
-
-                <components:CloseButton ClickCommand="{Binding Path=CloseCommand}"
-                                        VerticalAlignment="Top"
-                                        HorizontalAlignment="Right" />
-            </Grid>
-
-            <!-- #region ROW 2 -->
-            <Button Grid.Column="0"
-                    Grid.Row="1"
-                    FontWeight="SemiBold"
-                    FontSize="18"
-                    Margin="5"
-                    Height="32"
-                    Width="85"
-                    Command="{Binding Path=StartPauseCommand}">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource DefaultButton}">
-                        <Setter Property="Content" Value="Start" />
+            <ProgressBar IsIndeterminate="True"
+                         Width="200"
+                         Height="20"
+                         BorderBrush="{DynamicResource PrimaryTransp4Solid}"
+                         Background="{DynamicResource DarkSolid}"
+                         Foreground="{DynamicResource PrimarySolid}">
+                <ProgressBar.Style>
+                    <Style TargetType="ProgressBar">
+                        <Setter Property="Visibility" Value="Visible" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Running}" Value="True">
-                                <Setter Property="Content" Value="Pause"/>
+                            <DataTrigger Binding="{Binding IsBusy}" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Button.Style>
-            </Button>
+                </ProgressBar.Style>
+            </ProgressBar>
 
-            <Button Grid.Column="1"
-                    Grid.Row="1"
-                    Content="Stop"
-                    FontWeight="SemiBold"
-                    FontSize="18"
-                    Margin="5"
-                    Height="32"
-                    Width="85"
-                    Command="{Binding Path=StartPauseCommand}">
-                <Button.Style>
-                    <Style TargetType="Button" BasedOn="{StaticResource DefaultButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.Style>
+                    <Style TargetType="Grid">
                         <Setter Property="Visibility" Value="Hidden" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Running}" Value="True">
+                            <DataTrigger Binding="{Binding IsBusy}" Value="False">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Button.Style>
-            </Button>
+                </Grid.Style>
 
-            <StackPanel Grid.Column="3"
+                <Grid Grid.Column="0"
+                      Grid.Row="0"
+                      Grid.ColumnSpan="4">
+                    <components:TitleBar DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                                         Title="{Binding Title}"
+                                         HorizontalAlignment="Left"/>
+
+                    <components:CloseButton ClickCommand="{Binding Path=CloseCommand}"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right" />
+                </Grid>
+
+                <!-- #region ROW 2 -->
+                <Button Grid.Column="0"
                         Grid.Row="1"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Stretch">
-                <Label Content="{Binding ElapsedTimeString}"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Right"
-                       Foreground="{DynamicResource PrimarySolid}"
-                       FontSize="30" />
-            </StackPanel>
-            <!-- #endregion -->
+                        FontWeight="SemiBold"
+                        FontSize="15"
+                        Margin="5"
+                        Height="32"
+                        Width="85"
+                        Command="{Binding Path=StartPauseCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource DefaultButton}">
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Running}" Value="True" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="Content" Value="Pause" />
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
+
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Running}" Value="False" />
+                                        <Condition Binding="{Binding HasCurDayWork}" Value="True" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="Content" Value="Continue" />
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
+
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Running}" Value="False" />
+                                        <Condition Binding="{Binding HasCurDayWork}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="Content" Value="Start" />
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <StackPanel Grid.Column="1"
+                            Grid.Row="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Stretch">
+                    <Label Content="{Binding ElapsedTimeString}"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Foreground="{DynamicResource PrimarySolid}"
+                           FontSize="30.4" />
+                </StackPanel>
+
+                <Button Grid.Column="2"
+                        Grid.Row="1"
+                        Content="Stop"
+                        FontWeight="SemiBold"
+                        FontSize="15"
+                        Margin="5"
+                        Height="32"
+                        Width="85"
+                        Command="{Binding Path=StopCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource DefaultButton}">
+                            <Setter Property="Visibility" Value="Hidden" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding HasCurDayWork}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <!-- #endregion -->
             
-            <!-- #region ROW 5 -->
-            <StackPanel Grid.Column="0"
-                        Grid.ColumnSpan="2"
-                        Grid.Row="4"
-                        VerticalAlignment="Bottom"
-                        Orientation="Horizontal">
-                <Label Content="Today's work started at "
-                       FontSize="9"
-                       Foreground="{DynamicResource PrimarySolid}"/>
+                <!-- #region ROW 3 -->
+                <Grid Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
 
-                <Label Content="18:16 AM"
-                       Margin="-10, 0, 0, 0"
-                       FontSize="9"
-                       Foreground="{DynamicResource PrimarySolid}" />
-            </StackPanel>
+                    <StackPanel Grid.Column="0"
+                                Height="2"
+                                Background="{DynamicResource PrimaryTransp4Solid}"
+                                Margin="5, 0"/>
 
-            <StackPanel Grid.Column="3"
-                        Grid.Row="4"
-                        Margin="0, 0, 2, 2"
-                        Orientation="Horizontal"
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Right">
-                <Button Content="&#xf508;"
-                        Style="{StaticResource DefaultButton}"
-                        FontSize="18"
-                        Margin="0, 0, 5, 0"
-                        Height="20"
-                        Width="30"
-                        Cursor="Hand"
-                        BorderThickness="1"
-                        BorderBrush="{DynamicResource PrimaryTransp4Solid}"
-                        FontFamily="{StaticResource FontAwesomeSolid}"
-                        Command="{Binding Path=OpenHirersManagerCommand}">
-                    <Button.ToolTip>
-                        <ToolTip>
-                            <Label Content="Manager Hirers" />
-                        </ToolTip>
-                    </Button.ToolTip>
-                </Button>
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <Button Content="&#xf1da;"
+                                Style="{StaticResource DefaultButton}"
+                                FontSize="18"
+                                Margin="0, 0, 5, 0"
+                                Height="20"
+                                Width="30"
+                                Cursor="Hand"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource PrimaryTransp4Solid}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                Command="{Binding Path=OpenHistoryCommand}">
+                            <Button.ToolTip>
+                                <ToolTip>
+                                    <Label Content="Day Work History" />
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                    
+                        <Button Content="&#xf508;"
+                                Style="{StaticResource DefaultButton}"
+                                FontSize="18"
+                                Margin="0, 0, 5, 0"
+                                Height="20"
+                                Width="30"
+                                Cursor="Hand"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource PrimaryTransp4Solid}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                Command="{Binding Path=OpenHirersManagerCommand}">
+                            <Button.ToolTip>
+                                <ToolTip>
+                                    <Label Content="Manager Hirers" />
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
 
-                <Button Content="&#xf085;"
-                        Style="{StaticResource DefaultButton}"
-                        FontSize="18"
-                        Cursor="Hand"
-                        Height="20"
-                        Width="30"
-                        BorderThickness="1"
-                        BorderBrush="{DynamicResource PrimaryTransp4Solid}"
-                        FontFamily="{StaticResource FontAwesomeSolid}"
-                        Command="{Binding Path=OpenConfigsCommand}">
-                    <Button.ToolTip>
-                        <ToolTip>
-                            <Label Content="Configurations" />
-                        </ToolTip>
-                    </Button.ToolTip>
-                </Button>
-            </StackPanel>
-            <!-- #endregion -->
+                        <Button Content="&#xf085;"
+                                Style="{StaticResource DefaultButton}"
+                                FontSize="18"
+                                Cursor="Hand"
+                                Height="20"
+                                Width="30"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource PrimaryTransp4Solid}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                Command="{Binding Path=OpenConfigsCommand}">
+                            <Button.ToolTip>
+                                <ToolTip>
+                                    <Label Content="Configurations" />
+                                </ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2"
+                                Height="2"
+                                Background="{DynamicResource PrimaryTransp4Solid}"
+                                Margin="5, 0"/>
+                </Grid>
+                <!-- #endregion -->
+            </Grid>
         </Grid>
     </Border>
 </pages:BaseWindow>

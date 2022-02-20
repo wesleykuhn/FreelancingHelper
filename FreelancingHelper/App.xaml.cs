@@ -1,4 +1,7 @@
-﻿using FreelancingHelper.Services.Directories;
+﻿using FreelancingHelper.Services.Deleter;
+using FreelancingHelper.Services.Directories;
+using FreelancingHelper.Services.Email;
+using FreelancingHelper.Services.Objects;
 using FreelancingHelper.Services.Serializator;
 using FreelancingHelper.Services.Settings;
 using FreelancingHelper.Services.Startup;
@@ -24,10 +27,15 @@ namespace FreelancingHelper
 
         private void ConfigureServices(ServiceCollection services)
         {
-            services.AddSingleton<IStartupService, StartupService>();
-            services.AddSingleton<IDirectoriesService, DirectoriesService>();
-            services.AddSingleton<ISerializatorService, SerializatorService>();
+            services.AddScoped<IDeleterService, DeleterService>();
+            services.AddScoped<IStartupService, StartupService>();
+            services.AddScoped<ISerializatorService, SerializatorService>();
+            services.AddScoped<IDirectoriesService, DirectoriesService>();
+            services.AddScoped<IEmailTemplatesService, EmailTemplatesService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddSingleton<ISettingsService, SettingsService>();
+            services.AddSingleton<IHirerService, HirerService>();
+            services.AddSingleton<IDayWorkService, DayWorkService>();
         }
 
         protected override void OnStartup(StartupEventArgs e)

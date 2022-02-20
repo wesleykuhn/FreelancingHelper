@@ -4,9 +4,61 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:pages="clr-namespace:FreelancingHelper.Pages"
+                  xmlns:components="clr-namespace:FreelancingHelper.Components"
                   mc:Ignorable="d"
-                  Title="AddEditHirerWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+                  x:Name="this"
+                  Title="Add/Edit Hirer"
+                  Height="145"
+                  Width="450"
+                  Background="{DynamicResource PrimarySolid}">
+
+    <Border Margin="1"
+            Background="{DynamicResource DarkSolid}">
+        <StackPanel>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <components:TitleBar Title="{Binding Title, ElementName=this}"
+                                         HorizontalAlignment="Left"/>
+
+                <components:CloseButton ClickCommand="{Binding Path=CloseCommand}"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Right" />
+            </Grid>
+
+            <Border Margin="5"
+                    Padding="5"
+                    BorderThickness="1"
+                    BorderBrush="{DynamicResource PrimaryTransp4Solid}">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Hirer Name:" Foreground="{DynamicResource PrimarySolid}" />
+
+                        <TextBox Text="{Binding Name}"
+                                 Style="{StaticResource DefaultTextBox}"
+                                 Height="20"
+                                 Width="337"
+                                 MaxLength="255"
+                                 VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 10">
+                        <Label Content="Hirer E-mail:" Foreground="{DynamicResource PrimarySolid}" />
+
+                        <TextBox Text="{Binding Email}"
+                                 Style="{StaticResource DefaultTextBox}"
+                                 Height="20"
+                                 Width="322"
+                                 MaxLength="255"
+                                 VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <Button Content="{Binding DoneButtonText}"
+                            Style="{StaticResource DefaultButton}"
+                            Width="80"
+                            Height="25"
+                            HorizontalAlignment="Right"
+                            Command="{Binding Path=AddEditCommand}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Border>
 </pages:BaseWindow>

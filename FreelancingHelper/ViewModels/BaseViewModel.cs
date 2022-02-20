@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace FreelancingHelper.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         protected NavigationService Navigation => NavigationService.Current;
 
@@ -35,11 +35,15 @@ namespace FreelancingHelper.ViewModels
 
         #endregion
 
+        #region [ PRE-SET NAVIGATION METHODS ]
+
         //Loaded when I come to the new page
         public virtual Task InitAsync(object args = null) => Task.CompletedTask;
 
         //Loaded when I came back to the page
         public virtual Task BackAsync(object args = null) => Task.CompletedTask;
+
+        #endregion
 
         #region [ PROP WATCHER ]
 

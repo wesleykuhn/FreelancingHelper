@@ -3,7 +3,6 @@ using FreelancingHelper.Pages;
 using FreelancingHelper.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,15 +25,15 @@ namespace FreelancingHelper.Services.Navigation
             CreateNavigationMapping();
         }
 
+        // If this options is enabled we setup our navigation bag, like in mobile apps, but without stack order.
+        // Adds the first viewModel (wich represents our page), in this case the main one, that doesnt have a parent
         public void TrySetupNavigationStack(BaseViewModel mainViewModel)
         {
-            // If this options is enabled we setup our navigation bag, like in mobile apps, but without stack order.
-            if (!ConstantsAndSettings.EnableStackNavigation)
+            
+            if (!ConstantsAndSettings.EnableBagNavigation)
                 return;
 
             _navigationBag = new List<NavigationBagItem>();
-
-            // Adding the first viewModel (wich represents our page), in this case the main one, that doesnt have a parent
             _navigationBag.Add(new(mainViewModel, null));
         }
 
@@ -43,12 +42,12 @@ namespace FreelancingHelper.Services.Navigation
             _navigationMapping.Add(nameof(ConfigsViewModel), typeof(ConfigsWindow));
             _navigationMapping.Add(nameof(HirersManagerViewModel), typeof(HirersManagerWindow));
             _navigationMapping.Add(nameof(AddEditHirerViewModel), typeof(AddEditHirerWindow));
+            _navigationMapping.Add(nameof(HistoryViewModel), typeof(HistoryWindow));
+            _navigationMapping.Add(nameof(DayWorkDetailsViewModel), typeof(DayWorkDetailsWindow));
         }
 
-        public async Task Go<TViewModel>(object args = null, [CallerFilePath]string newVmParentPath = "") where TViewModel : BaseViewModel
+        public async Task GoAsync<TViewModel>(object args = null, [CallerFilePath]string newVmParentPath = "") where TViewModel : BaseViewModel
         {
-            var result = CheckIfNewWindowCanBeOpen(typeof(TViewModel));
-
             if (!CheckIfNewWindowCanBeOpen(typeof(TViewModel)))
                 return;
 
@@ -59,10 +58,8 @@ namespace FreelancingHelper.Services.Navigation
             window.Show();
         }
 
-        public async Task GoDialog<TViewModel>(object args = null, [CallerFilePath]string newVmParentPath = "") where TViewModel : BaseViewModel
+        public async Task GoDialogAsync<TViewModel>(object args = null, [CallerFilePath]string newVmParentPath = "") where TViewModel : BaseViewModel
         {
-            var result = CheckIfNewWindowCanBeOpen(typeof(TViewModel));
-
             if (CheckIfNewWindowCanBeOpen(typeof(TViewModel)))
                 return;
 
@@ -72,10 +69,27 @@ namespace FreelancingHelper.Services.Navigation
 
             window.ShowDialog();
         }
+        public ValueTask BackAsync(BaseViewModel currentViewModel, object args = null)
+        {
+            if (ConstantsAndSettings.EnableBagNavigation)
+            {
+                var viewModelIndex = _navigationBag.FindIndex(fi => fi.ViewModel.GetType().Name == currentViewModel.GetType().Name);
+
+                var bagItem = _navigationBag[viewModelIndex];
+
+                _navigationBag.RemoveAt(viewModelIndex);
+
+                currentViewModel.BindedWindow.Close();
+
+                return new ValueTask(bagItem.ParentViewModel.BackAsync(args));
+            }
+            else
+                currentViewModel.BindedWindow.Close();
+        }
 
         private bool CheckIfNewWindowCanBeOpen(Type viewModelType)
         {
-            if (!ConstantsAndSettings.EnableStackNavigation)
+            if (!ConstantsAndSettings.EnableBagNavigation)
                 return true;
 
             return !_navigationBag.Exists(e => e.ViewModel.GetType() == viewModelType);
@@ -83,7 +97,7 @@ namespace FreelancingHelper.Services.Navigation
 
         private void HandlViewModelParentPath(ref string newVmParentPath)
         {
-            if (string.IsNullOrEmpty(newVmParentPath) || !ConstantsAndSettings.EnableStackNavigation)
+            if (string.IsNullOrEmpty(newVmParentPath) || !ConstantsAndSettings.EnableBagNavigation)
             {
                 newVmParentPath = null;
                 return;
@@ -93,8 +107,6 @@ namespace FreelancingHelper.Services.Navigation
             var parentName = newVmParentPath.Substring(barIndex + 1, newVmParentPath.Length - (barIndex + 1)).Replace(".cs", "");
             newVmParentPath = parentName;
         }
-
-        //public async Task GoBack
 
         private async Task<Window> CreateBindAndInitViewModel<TViewModel>(object args, string parentViewModelName)
         {
@@ -128,9 +140,9 @@ namespace FreelancingHelper.Services.Navigation
             window.DataContext = viewModel;
             viewModel.BindedWindow = window;
 
-            if (ConstantsAndSettings.EnableStackNavigation)
+            if (ConstantsAndSettings.EnableBagNavigation)
             {
-                var newVmParentIndex = _navigationBag.FindIndex(s => s.ViewModel.GetType().Name == parentViewModelName);
+                var newVmParentIndex = _navigationBag.FindIndex(fi => fi.ViewModel.GetType().Name == parentViewModelName);
 
                 _navigationBag.Add(new(viewModel, _navigationBag[newVmParentIndex].ViewModel));
             }

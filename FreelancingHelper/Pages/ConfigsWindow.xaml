@@ -4,12 +4,13 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:components="clr-namespace:FreelancingHelper.Components"
-                  xmlns:pages="clr-namespace:FreelancingHelper.Pages"
+                  xmlns:pages="clr-namespace:FreelancingHelper.Pages" xmlns:customControls="clr-namespace:FreelancingHelper.CustomControls"
                   mc:Ignorable="d"
                   x:Name="this"
                   Title="Configurations"
-                  Height="220"
-                  Width="350"
+                  Height="235"
+                  Width="450"
+                  Loaded="Window_Loaded"
                   Background="{DynamicResource PrimarySolid}">
 
     <Border Margin="1"
@@ -26,23 +27,108 @@
                 </Grid>
 
                 <Border Margin="5"
+                        Padding="0, 0, 0, 5"
                         BorderThickness="1"
                         BorderBrush="{DynamicResource PrimaryTransp4Solid}">
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Left">
-                        <Label Content="Primary Color:" Foreground="{DynamicResource PrimarySolid}"/>
+                    <StackPanel HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Program ForeColor Color:" Foreground="{DynamicResource PrimarySolid}"/>
 
-                        <TextBox Text="{Binding PrimaryColorHex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Height="20"
-                                 Width="70"
-                                 MaxLength="8"
-                                 Foreground="{DynamicResource PrimarySolid}"
-                                 HorizontalContentAlignment="Center"
-                                 VerticalContentAlignment="Center"
-                                 Background="{DynamicResource DarkSolid}"
-                                 BorderBrush="{DynamicResource PrimarySolid}"/>
+                            <TextBox Text="{Binding PrimaryColorHex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource DefaultTextBox}"
+                                     Height="20"
+                                     Width="70"
+                                     MaxLength="8"
+                                     CharacterCasing="Upper"
+                                     HorizontalContentAlignment="Left"
+                                     VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Language:" Foreground="{DynamicResource PrimarySolid}"/>
+
+                            <customControls:CustomComboBox x:Name="ccbLanguages"
+                                                           ItemsSource="{Binding Languages}"
+                                                           Style="{StaticResource DefaultComboBox}"
+                                                           Background="{DynamicResource DarkSolid}"
+                                                           Height="26"
+                                                           ItemContainerStyle="{StaticResource DefaultComboBoxItem}"
+                                                           SelectedItem="{Binding SelectedLanguage}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Background="{DynamicResource DarkSolid}">
+                                            <Label Content="{Binding Name}"
+                                                   FontSize="12"
+                                                   Foreground="{DynamicResource PrimarySolid}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </customControls:CustomComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Your Profissional Name:" Foreground="{DynamicResource PrimarySolid}"/>
+
+                            <TextBox Text="{Binding DevName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource DefaultTextBox}"
+                                     Height="20"
+                                     Width="254"
+                                     MaxLength="255"
+                                     HorizontalContentAlignment="Left"
+                                     VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="SMTP Address:" Foreground="{DynamicResource PrimarySolid}"/>
+
+                            <TextBox Text="{Binding SmtpAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource DefaultTextBox}"
+                                     Height="20"
+                                     Width="326"
+                                     MaxLength="255"
+                                     HorizontalContentAlignment="Left"
+                                     VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="SMTP Port:" Foreground="{DynamicResource PrimarySolid}"/>
+
+                            <TextBox Text="{Binding SmtpPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource DefaultTextBox}"
+                                     Height="20"
+                                     Width="70"
+                                     MaxLength="6"
+                                     HorizontalContentAlignment="Left"
+                                     VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Profissional E-mail:" Foreground="{DynamicResource PrimarySolid}"/>
+
+                            <TextBox Text="{Binding DevEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource DefaultTextBox}"
+                                     Height="20"
+                                     Width="275"
+                                     MaxLength="255"
+                                     HorizontalContentAlignment="Left"
+                                     VerticalContentAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Profissional E-mail Password:" Foreground="{DynamicResource PrimarySolid}"/>
+
+                            <TextBox Text="{Binding DevEmailPswd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource DefaultTextBox}"
+                                     Height="20"
+                                     Width="210"
+                                     MaxLength="255"
+                                     HorizontalContentAlignment="Left"
+                                     VerticalContentAlignment="Center"/>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
+
+                <Label Content="Close the window to save changes..." FontSize="8" Foreground="{DynamicResource PrimarySolid}" />
             </StackPanel>
         </StackPanel>
     </Border>

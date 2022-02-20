@@ -1,6 +1,9 @@
 ﻿using FreelancingHelper.Models;
+using FreelancingHelper.Models.Interfaces;
 using FreelancingHelper.Services.Serializator;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -10,7 +13,6 @@ namespace FreelancingHelper.Services.Settings
     public class SettingsService : ISettingsService
     {
         public AppConfiguration AppConfiguration { get; private set; }
-        //public DayWork
 
         private readonly ISerializatorService _serializatorService;
         public SettingsService(ISerializatorService serializatorService)
@@ -32,11 +34,53 @@ namespace FreelancingHelper.Services.Settings
         {
             AppConfiguration = new AppConfiguration
             {
-                PrimaryColor = Color.FromRgb(ConstantsAndSettings.DefaultCrimsonPrimaryColorR, ConstantsAndSettings.DefaultCrimsonPrimaryColorG, ConstantsAndSettings.DefaultCrimsonPrimaryColorB)
+                CurLanguage = ConstantsAndSettings.AvailableLanguages.Where(w => w.Type == Enums.AppAvailableLanguageEnum.English).First(),
+                CurrentSelectedHirerId = -1,
+                PrimaryColor = Color.FromRgb
+                (
+                    ConstantsAndSettings.DefaultCrimsonPrimaryColorR,
+                    ConstantsAndSettings.DefaultCrimsonPrimaryColorG,
+                    ConstantsAndSettings.DefaultCrimsonPrimaryColorB
+                ),
+                HirerIdCounter = 0,
+                DayWorkIdCounter = 0,
             };
 
             await SaveAppConfigurationAsync();
         }
+
+        public bool CheckIfEmailSettingsAreSet() =>
+            AppConfiguration.CurSmtpPort != 0 &&
+            !string.IsNullOrEmpty(AppConfiguration.CurSmtpAddress) &&
+            !string.IsNullOrEmpty(AppConfiguration.CurOriginEmail) &&
+            !string.IsNullOrEmpty(AppConfiguration.CurOriginEmailPswd) &&
+            !string.IsNullOrEmpty(AppConfiguration.DevName);
+
+        #region [ ID COUNTERS ]
+
+        public async Task<long> GetAndIncrementObjectTypeIdCounter<TModel>() where TModel : IAutoId
+        {
+            long id = -1;
+
+            switch (typeof(TModel).Name)
+            {
+                case nameof(Hirer):
+                    id = AppConfiguration.HirerIdCounter;
+                    AppConfiguration.HirerIdCounter++;
+                    break;
+
+                case nameof(DayWork):
+                    id = AppConfiguration.DayWorkIdCounter;
+                    AppConfiguration.DayWorkIdCounter++;
+                    break;
+            }
+
+            await SaveAppConfigurationAsync();
+
+            return id;
+        }
+
+        #endregion
 
         #region [ COLORS ]
 
@@ -45,11 +89,6 @@ namespace FreelancingHelper.Services.Settings
             SetAppsPrimaryColor(AppConfiguration.PrimaryColor);
         }
 
-        /// <summary>
-        /// Tries to set the current app's primary color.
-        /// </summary>
-        /// <param name="newColorHexa">The new color in hexadecimal, without the '#' character. You can use 3, 6 or even 8(2 for Alpha) digits.</param>
-        /// <returns>The new color if it was successful or a default(Color) if not.</returns>
         public Color TrySetAppsPrimaryColorFromHexa(string newColorHexa)
         {
             if (string.IsNullOrEmpty(newColorHexa)
@@ -76,22 +115,17 @@ namespace FreelancingHelper.Services.Settings
             }
         }
 
-        private void SetAppsPrimaryColor(Color newColor)
+        public void SetAppsPrimaryColor(Color newColor)
         {
-            var newTransp4Color = Color.FromArgb(68, newColor.R, newColor.G, newColor.B);
+            var newTransp4Color = Color.FromArgb(85, newColor.R, newColor.G, newColor.B);
 
             Application.Current.Resources["PrimaryColor"] = newColor;
             Application.Current.Resources["PrimarySolid"] = new SolidColorBrush(newColor);
 
             Application.Current.Resources["PrimaryTransp4Color"] = newTransp4Color;
             Application.Current.Resources["PrimaryTransp4Solid"] = new SolidColorBrush(newTransp4Color);
-        }
 
-        public async Task SaveAppsPrimaryColor(Color newColor)
-        {
             AppConfiguration.PrimaryColor = newColor;
-
-            await SaveAppConfigurationAsync();
         }
 
         #endregion

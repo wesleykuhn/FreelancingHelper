@@ -1,5 +1,6 @@
 ﻿using FreelancingHelper.Pages;
 using FreelancingHelper.ViewModels;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FreelancingHelper
@@ -23,6 +24,12 @@ namespace FreelancingHelper
         {
             if (e.ChangedButton == MouseButton.Left)
                 DragMove();
+        }
+
+        private void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var context = DataContext as MainViewModel;
+            _ = Task.Run(() => context.InitAsync());
         }
     }
 }

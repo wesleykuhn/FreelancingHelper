@@ -1,14 +1,16 @@
-﻿using System;
+﻿using FreelancingHelper.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace FreelancingHelper.Models
 {
-    public class DayWork
+    public class DayWork : IAutoId
     {
-        public int Id { get; set; }
-        public int HirerId { get; set; }
+        public long Id { get; set; }
+        public long HirerId { get; set; }
         public DateTime Started { get; set; }
         public DateTime Finished { get; set; }
-        public List<WorkingTime>? DayWorkingTimes { get; set; }
+        public TimeSpan TotalWorkingTime { get; set; }
+        public List<WorkingTime> DayWorkingTimes { get; set; }
     }
 }
