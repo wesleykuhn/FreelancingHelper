@@ -8,7 +8,7 @@
                   mc:Ignorable="d"
                   x:Name="this"
                   Title="Add/Edit Hirer"
-                  Height="145"
+                  Height="200"
                   Width="450"
                   Background="{DynamicResource PrimarySolid}">
 
@@ -40,7 +40,7 @@
                                  VerticalContentAlignment="Center"/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="0, 10">
+                    <StackPanel Orientation="Horizontal" Margin="0, 10, 0, 0">
                         <Label Content="Hirer E-mail:" Foreground="{DynamicResource PrimarySolid}" />
 
                         <TextBox Text="{Binding Email}"
@@ -48,6 +48,17 @@
                                  Height="20"
                                  Width="322"
                                  MaxLength="255"
+                                 VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 10">
+                        <Label Content="Salary/Hour:" Foreground="{DynamicResource PrimarySolid}" />
+
+                        <TextBox Text="{Binding SalaryPerHour}"
+                                 Style="{StaticResource DefaultTextBox}"
+                                 Height="20"
+                                 Width="100"
+                                 MaxLength="8"
                                  VerticalContentAlignment="Center"/>
                     </StackPanel>
 

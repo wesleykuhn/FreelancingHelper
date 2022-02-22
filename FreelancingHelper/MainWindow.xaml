@@ -9,7 +9,7 @@
                   Loaded="MainWindow_Loaded"
                   mc:Ignorable="d"
                   Title="Freelancing Helper"
-                  Height="100"
+                  Height="124"
                   Width="350"
                   Background="{DynamicResource PrimarySolid}">
 
@@ -41,6 +41,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*"/>
@@ -146,11 +147,37 @@
                     </Button.Style>
                 </Button>
                 <!-- #endregion -->
-            
+
                 <!-- #region ROW 3 -->
+                <StackPanel Grid.Column="0"
+                            Grid.Row="2"
+                            Grid.ColumnSpan="3"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Hidden" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GainedUntilNow, Converter={StaticResource HasValueConverter}}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    
+                    <Label Content="Money Gained:"
+                           Margin="0, 0, -5, 0"
+                           Foreground="{DynamicResource PrimarySolid}" />
+                    
+                    <Label Content="{Binding GainedUntilNow}"
+                           Foreground="{DynamicResource PrimarySolid}" />
+                </StackPanel>
+                <!-- #endregion -->
+            
+                <!-- #region ROW 4 -->
                 <Grid Grid.Column="0"
-                                Grid.ColumnSpan="3"
-                                Grid.Row="2">
+                      Grid.ColumnSpan="3"
+                      Grid.Row="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="Auto" />

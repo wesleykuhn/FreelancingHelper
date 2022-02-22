@@ -48,12 +48,12 @@
                                 <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
                                                 DisplayMemberBinding="{Binding Path=Id}"
                                                 Header="ID"
-                                                Width="100">
+                                                Width="70">
                                 </GridViewColumn>
 
                                 <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
                                                 DisplayMemberBinding="{Binding Path=Name}"
-                                                Width="300">
+                                                Width="244">
                                     <GridViewColumnHeader Content="Name">
                                         <GridViewColumnHeader.ContextMenu>
                                             <ContextMenu MenuItem.Click="NameCM_Click" Name="NameCM">
@@ -67,7 +67,12 @@
                                 <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
                                                 DisplayMemberBinding="{Binding Path=Email}"
                                                 Header="E-mail"
-                                                Width="365"/>
+                                                Width="350"/>
+
+                                <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
+                                                DisplayMemberBinding="{Binding Path=SalaryPerHour}"
+                                                Header="Salary/Hour"
+                                                Width="100"/>
                             </GridView>
                         </customControls:CustomListView.View>
                     </customControls:CustomListView>

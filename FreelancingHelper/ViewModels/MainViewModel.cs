@@ -24,6 +24,13 @@ namespace FreelancingHelper.ViewModels
             set => SetProperty(ref _elapsedTimeString, value);
         }
 
+        private string _gainedUntilNow;
+        public string GainedUntilNow
+        {
+            get => _gainedUntilNow;
+            set => SetProperty(ref _gainedUntilNow, value);
+        }
+
         private ICommand _startPauseCommand;
         public ICommand StartPauseCommand => _startPauseCommand ??= new BasicCommand(async () => await StartPauseCommandExecute());
 
@@ -63,6 +70,8 @@ namespace FreelancingHelper.ViewModels
         private Timer _timer = new(OneSecondMilliseconds);
         private Stopwatch _deltaWatcher = new();
         private Stopwatch _totalTimeWatcher = new();
+
+        private Hirer _curHirer;
 
         #endregion
 
@@ -155,6 +164,21 @@ namespace FreelancingHelper.ViewModels
         {
             if (!Running)
             {
+                if (!_hirerService.Hirers.Exists(e => e.Id == _settingsService.AppConfiguration.CurrentSelectedHirerId))
+                {
+                    MessageBox.Show
+                    (
+                        $"You cannot start the timer! Because the current Hirer is not set or it was deleted. Please, solve it before trying again.",
+                        "ERROR",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+
+                    return;
+                }
+                else
+                    _curHirer = _hirerService.Hirers.Where(w => w.Id == _settingsService.AppConfiguration.CurrentSelectedHirerId).First();
+
                 if (_curDayWork == null)
                 {
                     var now = DateTime.Now;
@@ -243,6 +267,9 @@ namespace FreelancingHelper.ViewModels
             _lastWorkingTimeDuration = (DateTime.Now - _curDayWork.DayWorkingTimes.Last().StartedAt) + _curDayWork.TotalWorkingTime;
 
             ElapsedTimeString = _lastWorkingTimeDuration.ToString(@"hh\:mm\:ss");
+
+            if (_curHirer.SalaryPerHour != 0)
+                GainedUntilNow = string.Format(CultureInfo.InvariantCulture, "{0:N3}", _lastWorkingTimeDuration.TotalHours * _curHirer.SalaryPerHour);
         }
 
         private void ResetUI()

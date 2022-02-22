@@ -1,8 +1,6 @@
 ﻿using FreelancingHelper.CommandModels;
-using FreelancingHelper.Enums;
 using FreelancingHelper.Models;
 using FreelancingHelper.Services.Objects;
-using FreelancingHelper.Services.Serializator;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +22,13 @@ namespace FreelancingHelper.ViewModels
         {
             get => _email;
             set => SetProperty(ref _email, value);
+        }
+
+        private string _salaryPerHour;
+        public string SalaryPerHour
+        {
+            get => _salaryPerHour;
+            set => SetProperty(ref _salaryPerHour, value);
         }
 
         private string _doneButtonText = "Add";
@@ -56,6 +61,7 @@ namespace FreelancingHelper.ViewModels
 
                 Name = hirer.Name;
                 Email = hirer.Email;
+                SalaryPerHour = hirer.SalaryPerHour.ToString();
 
                 DoneButtonText = "Edit";
             }
@@ -69,6 +75,7 @@ namespace FreelancingHelper.ViewModels
         private async Task AddEditCommandExecute()
         {
             Hirer hirerToSendBack;
+            float parsedSalaryPerHour = 0;
 
             if (_hirerToEdit == null)
             {
@@ -84,12 +91,30 @@ namespace FreelancingHelper.ViewModels
                     return;
                 }
 
-                hirerToSendBack = await _hirerService.AddHirer(Name, Email);
+                if (!string.IsNullOrEmpty(SalaryPerHour) && !string.IsNullOrWhiteSpace(SalaryPerHour))
+                {
+                    var parsed = float.TryParse(SalaryPerHour, out float parseResult);
+
+                    if (!parsed)
+                    {
+                        MessageBox.Show("The Salary/Hour is invalid!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    parsedSalaryPerHour = parseResult;
+                }
+
+                hirerToSendBack = await _hirerService.AddHirer(Name, Email, parsedSalaryPerHour);
             }
             else
             {
+                var parsed = float.TryParse(SalaryPerHour, out float parseResult);
+                if (parsed)
+                    parsedSalaryPerHour = parseResult;
+
                 _hirerToEdit.Name = Name;
                 _hirerToEdit.Email = Email;
+                _hirerToEdit.SalaryPerHour = parsedSalaryPerHour;
 
                 await _hirerService.UpdateHirer(_hirerToEdit);
 

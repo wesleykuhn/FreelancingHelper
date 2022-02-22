@@ -26,9 +26,9 @@ namespace FreelancingHelper.Services.Objects
             _deleterService = deleterService;
         }
 
-        public async Task<Hirer> AddHirer(string name, string email)
+        public async Task<Hirer> AddHirer(string name, string email, float salaryPerHour)
         {
-            Hirer newHirer = new(name, email);
+            Hirer newHirer = new(name, email, salaryPerHour);
 
             newHirer.Id = await _settingsService.GetAndIncrementObjectTypeIdCounter<Hirer>();
 

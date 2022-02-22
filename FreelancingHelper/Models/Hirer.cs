@@ -7,12 +7,14 @@ namespace FreelancingHelper.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public float SalaryPerHour { get; set; }
 
         public Hirer() { }
-        public Hirer(string name, string email)
+        public Hirer(string name, string email, float salaryPerHour)
         {
             Name = name;
             Email = email;
+            SalaryPerHour = salaryPerHour;
         }
 
         public override bool Equals(object? obj)
