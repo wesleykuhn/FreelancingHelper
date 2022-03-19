@@ -55,14 +55,47 @@
                                Foreground="{DynamicResource PrimarySolid}"/>
                     </TextBlock>
 
-                    <TextBlock FontSize="14">
-                        <Label Content="Finished At:"
-                               Foreground="{DynamicResource PrimarySolid}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="14">
+                            <Label Content="Finished At:"
+                                   Foreground="{DynamicResource PrimarySolid}"/>
                     
-                        <Label Content="{Binding FinishedAt, Converter={StaticResource ToStringConverter}}"
-                               Margin="-10, 0, 0, 0"
-                               Foreground="{DynamicResource PrimarySolid}"/>
-                    </TextBlock>
+                            <Label Content="{Binding FinishedAt, Converter={StaticResource ToStringConverter}}"
+                                   Margin="-10, 0, 0, 0"
+                                   Foreground="{DynamicResource PrimarySolid}"/>
+                            
+                            <Label Content="Not Finished Yet!"
+                                   Margin="-10, 0, 0, 0"
+                                   Foreground="{DynamicResource PrimarySolid}">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding HasFinish}" Value="False">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </TextBlock>
+
+                        <Button Content="Finish"
+                                Width="80"
+                                Margin="5, 0, 0, 0"
+                                Command="{Binding Path=FinishDayWorkCommand}">
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource DefaultButton}" TargetType="Button">
+                                    <Setter Property="Visibility" Value="Hidden" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasFinish}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
 
                     <TextBlock FontSize="14">
                         <Label Content="Total Working Time:"

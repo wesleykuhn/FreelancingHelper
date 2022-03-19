@@ -16,21 +16,21 @@
         <StackPanel>
             <Grid VerticalAlignment="Top">
                 <components:TitleBar DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                                         Title="{Binding Title}"
-                                         HorizontalAlignment="Left"/>
+                                     Title="{Binding Title}"
+                                     HorizontalAlignment="Left"/>
 
                 <components:CloseButton ClickCommand="{Binding Path=CloseCommand}"
-                                            VerticalAlignment="Top"
-                                            HorizontalAlignment="Right" />
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Right" />
             </Grid>
 
             <StackPanel>
                 <ProgressBar IsIndeterminate="True"
-                         Width="200"
-                         Height="20"
-                         BorderBrush="{DynamicResource PrimaryTransp4Solid}"
-                         Background="{DynamicResource DarkSolid}"
-                         Foreground="{DynamicResource PrimarySolid}">
+                             Width="200"
+                             Height="20"
+                             BorderBrush="{DynamicResource PrimaryTransp4Solid}"
+                             Background="{DynamicResource DarkSolid}"
+                             Foreground="{DynamicResource PrimarySolid}">
                     <ProgressBar.Style>
                         <Style TargetType="ProgressBar">
                             <Setter Property="Visibility" Value="Visible" />
@@ -56,7 +56,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    
+
                     <StackPanel Margin="5">
                         <customControls:CustomListView ItemsSource="{Binding AllDaysWork}"
                                                        Margin="0, 5"
@@ -93,6 +93,21 @@
                                 </GridView>
                             </customControls:CustomListView.View>
                         </customControls:CustomListView>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="IDs (Separated by comma):"
+                                   Foreground="{DynamicResource PrimarySolid}" />
+
+                            <TextBox Text="{Binding MultipleHistories}"
+                                     Style="{StaticResource DefaultTextBox}"
+                                     Width="494"
+                                     VerticalContentAlignment="Center" />
+
+                            <Button Content=" Send Multiple as E-mail "
+                                    Margin="10, 0, 0, 0"
+                                    Style="{StaticResource DefaultButton}"
+                                    Command="{Binding Path=SendMultipleCommand}"/>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
             </StackPanel>

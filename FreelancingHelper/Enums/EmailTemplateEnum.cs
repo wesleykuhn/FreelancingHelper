@@ -2,6 +2,7 @@
 {
     public enum EmailTemplateEnum
     {
-        WorkingTimeReport
+        WorkingTimeReport,
+        WorkingTimeReportList
     }
 }

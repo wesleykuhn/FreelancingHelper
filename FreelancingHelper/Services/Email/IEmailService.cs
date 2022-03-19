@@ -1,4 +1,5 @@
 ﻿using FreelancingHelper.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FreelancingHelper.Services.Email
@@ -8,5 +9,6 @@ namespace FreelancingHelper.Services.Email
         Task<bool> Send(out string exceptionMessage);
         EmailService SetMailMessage(string to, string subject, string body);
         EmailService SetMailMessageAsWorkingTimeReport(string to, DayWork dayWorkToReport);
+        EmailService SetMailMessageAsWorkingTimeReportList(string to, IEnumerable<DayWork> daysWorkToReport);
     }
 }

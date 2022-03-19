@@ -17,7 +17,7 @@ namespace FreelancingHelper.Converters
                     return ts.ToString(@"h\:mm\:ss", CultureInfo.InvariantCulture);
 
                 case DateTime dt:
-                    return dt == DateTime.MinValue ? null : dt.ToString("yyyy:MM:dd hh:mm:ss tt", CultureInfo.InvariantCulture);
+                    return dt == DateTime.MinValue ? null : dt.ToString("yyyy-MM-dd hh:mm:ss tt", CultureInfo.InvariantCulture);
 
                 default:
                     return value;

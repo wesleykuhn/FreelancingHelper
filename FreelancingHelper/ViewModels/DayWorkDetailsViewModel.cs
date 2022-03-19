@@ -53,6 +53,13 @@ namespace FreelancingHelper.ViewModels
             set => SetProperty(ref _finishedAt, value);
         }
 
+        private bool _hasFinish;
+        public bool HasFinish
+        {
+            get => _hasFinish;
+            set => SetProperty(ref _hasFinish, value);
+        }
+
         private TimeSpan _totalTime;
         public TimeSpan TotalTime
         {
@@ -70,14 +77,19 @@ namespace FreelancingHelper.ViewModels
         private ICommand _sendEmailCommand;
         public ICommand SendEmailCommand => _sendEmailCommand ??= new BasicCommand(async () => await SendEmailCommandExecute());
 
+        private ICommand _finishDayWorkCommand;
+        public ICommand FinishDayWorkCommand => _finishDayWorkCommand ??= new BasicCommand(async () => await FinishDayWorkCommandExecute());
+
         private IHirerService _hirerService;
         private IEmailService _emailService;
         private ISettingsService _settingsService;
+        private IDayWorkService _dayWorkService;
         public DayWorkDetailsViewModel()
         {
             _hirerService = App.ServiceProvider.GetService<IHirerService>();
             _emailService = App.ServiceProvider.GetService<IEmailService>();
             _settingsService = App.ServiceProvider.GetService<ISettingsService>();
+            _dayWorkService = App.ServiceProvider.GetService<IDayWorkService>();
         }
 
         private DayWork _dayWork;
@@ -92,6 +104,7 @@ namespace FreelancingHelper.ViewModels
                 StartedAt = dayWork.Started;
                 FinishedAt = dayWork.Finished;
                 TotalTime = dayWork.TotalWorkingTime;
+
                 WorkingTimes = dayWork.DayWorkingTimes.Count > 0 ?
                     new ObservableCollection<WorkingTime>(dayWork.DayWorkingTimes) :
                     new ObservableCollection<WorkingTime>();
@@ -99,6 +112,8 @@ namespace FreelancingHelper.ViewModels
                 var hirer = _hirerService.Hirers.Where(w => w.Id == dayWork.HirerId).FirstOrDefault();
                 Hirer = hirer ?? null;
                 HirerToString = hirer.ToString() ?? string.Empty;
+
+                HasFinish = FinishedAt != DateTime.MinValue;
             }
 
             return Task.CompletedTask;
@@ -139,6 +154,33 @@ namespace FreelancingHelper.ViewModels
                 MessageBox.Show("E-mail sent successful!", "SUCCESS", MessageBoxButton.OK, MessageBoxImage.Information);
             else
                 MessageBox.Show("There was an error while trying to send the e-mail!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private async Task FinishDayWorkCommandExecute()
+        {
+            if (HasFinish)
+                return;
+
+            if (!_dayWork.DayWorkingTimes.Any() || _dayWork.DayWorkingTimes.Last().FinishedAt == DateTime.MinValue)
+            {
+                MessageBox.Show("The Day Work is corrupted or the last pause finish is not set! Please, verify before trying again.",
+                    "ERROR",
+                    MessageBoxButton.OK);
+                return;
+            }
+
+            var conf = MessageBox.Show("Do you really want to finish this day work?", "CONFIRMATION", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (conf != MessageBoxResult.Yes)
+                return;
+
+            _dayWork.Finished = _dayWork.DayWorkingTimes.Last().FinishedAt;
+
+            await _dayWorkService.UpdateDayWork(_dayWork);
+
+            FinishedAt = _dayWork.Finished;
+            HasFinish = true;
+
+            MessageBox.Show("The day work was successfuly finished!", "SUCCESS", MessageBoxButton.OK);
         }
     }
 }

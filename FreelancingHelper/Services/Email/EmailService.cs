@@ -1,6 +1,8 @@
-﻿using FreelancingHelper.Models;
+﻿using FreelancingHelper.Enums;
+using FreelancingHelper.Models;
 using FreelancingHelper.Services.Settings;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -56,8 +58,20 @@ namespace FreelancingHelper.Services.Email
         public EmailService SetMailMessageAsWorkingTimeReport(string to, DayWork dayWorkToReport)
         {
             _mailMessage = new(_originEmail, to);
-            _mailMessage.Subject = _emailTemplatesService.GetEmailTemplateSubject(Enums.EmailTemplateEnum.WorkingTimeReport, dayWorkToReport);
-            _mailMessage.Body = _emailTemplatesService.GetEmailTemplateBody(Enums.EmailTemplateEnum.WorkingTimeReport, dayWorkToReport); ;
+            _mailMessage.Subject = _emailTemplatesService.GetEmailTemplateSubject(EmailTemplateEnum.WorkingTimeReport, dayWorkToReport);
+            _mailMessage.Body = _emailTemplatesService.GetEmailTemplateBody(EmailTemplateEnum.WorkingTimeReport, dayWorkToReport); ;
+            _mailMessage.BodyEncoding = Encoding.UTF8;
+            _mailMessage.SubjectEncoding = Encoding.UTF8;
+            _mailMessage.IsBodyHtml = true;
+
+            return this;
+        }
+
+        public EmailService SetMailMessageAsWorkingTimeReportList(string to, IEnumerable<DayWork> daysWorkToReport)
+        {
+            _mailMessage = new(_originEmail, to);
+            _mailMessage.Subject = _emailTemplatesService.GetEmailTemplateSubject(EmailTemplateEnum.WorkingTimeReportList, daysWorkToReport);
+            _mailMessage.Body = _emailTemplatesService.GetEmailTemplateBody(EmailTemplateEnum.WorkingTimeReportList, daysWorkToReport); ;
             _mailMessage.BodyEncoding = Encoding.UTF8;
             _mailMessage.SubjectEncoding = Encoding.UTF8;
             _mailMessage.IsBodyHtml = true;

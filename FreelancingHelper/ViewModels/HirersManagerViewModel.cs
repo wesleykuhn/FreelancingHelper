@@ -53,11 +53,13 @@ namespace FreelancingHelper.ViewModels
 
         public override Task InitAsync(object args = null)
         {
-            AllHirers = new ObservableCollection<Hirer>(_hirerService.Hirers);
+            var allHirers = _hirerService.Hirers.OrderBy(h => h.Id).ToArray();
+
+            AllHirers = new ObservableCollection<Hirer>(allHirers);
 
             var currentSelectedHirerId = _settingsService.AppConfiguration.CurrentSelectedHirerId;
 
-            if (currentSelectedHirerId != -1 && AllHirers.Count(c => c.Id == currentSelectedHirerId) > 0)
+            if (currentSelectedHirerId != -1 && AllHirers.Any(c => c.Id == currentSelectedHirerId))
             {
                 SelectedHirerComboBox = AllHirers.Where(w => w.Id == currentSelectedHirerId).First();
             }

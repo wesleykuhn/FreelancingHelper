@@ -61,6 +61,26 @@ namespace FreelancingHelper.Services.Objects
             return dayWorks;
         }
 
+        public async Task<IEnumerable<DayWork>> GetOnlyDayWorksAsync(IEnumerable<long> ids)
+        {
+            var files = _directoriesService.GetAllDaysWorkPathAsync();
+
+            if (files == null || files.Count() == 0)
+                return null;
+
+            List<DayWork> dayWorks = new List<DayWork>();
+
+            foreach (var file in files)
+            {
+                var desserialized = await _serializatorService.DesserializeDayWorkAsync(file);
+
+                if (desserialized != null && desserialized != default(DayWork) && ids.Contains(desserialized.Id))
+                    dayWorks.Add(desserialized);
+            }
+
+            return dayWorks.OrderBy(o => o.Id).ToList();
+        }
+
         public async Task<DayWork> SeekForTodaysDayWork()
         {
             var dayWorkDir = _directoriesService.TryRecoveryLastDayWorkDir(_settingsService.AppConfiguration.CurrentSelectedHirerId);
