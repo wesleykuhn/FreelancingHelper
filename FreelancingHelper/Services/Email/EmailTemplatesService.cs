@@ -140,7 +140,7 @@ namespace FreelancingHelper.Services.Email
                         childOfBody += GetHtmlDottedItem($"{dayWork.Started:yyyy-MM-dd}: {dayWork.TotalWorkingTime:hh\\:mm\\:ss}.");
                     }
                     totalWorked = TimeSpan.FromSeconds(totalWorkedSeconds);
-                    childOfBody += GetHtmlSubtitle($"Total of hours: {totalWorked:hh\\:mm\\:ss}");
+                    childOfBody += GetHtmlSubtitle($"Total of hours: {totalWorked.TotalHours.ToString("n2", CultureInfo.InvariantCulture)}");
                     return GetHtmlDefaultThemeBody(childOfBody);
 
                 case AppAvailableLanguageEnum.PortugueseBr:
@@ -151,7 +151,7 @@ namespace FreelancingHelper.Services.Email
                         childOfBody += GetHtmlDottedItem($"{dayWork.Started:dd/MM/yyyy}: {dayWork.TotalWorkingTime:hh\\:mm\\:ss}.");
                     }
                     totalWorked = TimeSpan.FromSeconds(totalWorkedSeconds);
-                    childOfBody += GetHtmlSubtitle($"Total de horas: {totalWorked:hh\\:mm\\:ss}");
+                    childOfBody += GetHtmlSubtitle($"Total de horas: {totalWorked.TotalHours:n2}");
                     return GetHtmlDefaultThemeBody(childOfBody);
 
                 default:
