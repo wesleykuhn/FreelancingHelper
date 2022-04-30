@@ -87,16 +87,54 @@ namespace FreelancingHelper.ViewModels
             }
 
             var trimmed = MultipleHistories.Trim();
-            var ids = trimmed.Split(',');
+            var idsStringArray = trimmed.Split(',');
 
             List<long> idsList = new();
-
-            foreach (var id in ids)
+            foreach (var id in idsStringArray)
             {
-                var parseResult = long.TryParse(id, out long parsed);
+                if (id.Contains("-"))
+                {
+                    var interval = id.Split('-');
 
-                if (parseResult)
-                    idsList.Add(parsed);
+                    if (interval.Length != 2)
+                    {
+                        MessageBox.Show("The IDs of the histories are invalid! Please, valid format is X-Y.", "ERROR", MessageBoxButton.OK);
+                        return;
+                    }
+
+                    var parseResultInitial = long.TryParse(interval[0], out long initial);
+                    var parseResultFinal = long.TryParse(interval[1], out long final);
+
+                    if (!parseResultFinal || !parseResultInitial)
+                    {
+                        MessageBox.Show("The IDs of the histories are invalid! Please, valid format is X-Y (Numbers only!).", "ERROR", MessageBoxButton.OK);
+                        return;
+                    }
+
+                    if (initial >= final)
+                    {
+                        MessageBox.Show("The IDs of the histories are invalid! Please, valid format is X-Y (Where X is less than Y).", "ERROR", MessageBoxButton.OK);
+                        return;
+                    }
+
+                    for (long i = initial; i <= final; i++)
+                    {
+                        idsList.Add(i);
+                    }
+                }
+                else
+                {
+                    var parseResult = long.TryParse(id, out long parsed);
+
+                    if (!parseResult)
+                    {
+                        MessageBox.Show("The IDs of the histories are invalid! Please, verify (Numbers only!).", "ERROR", MessageBoxButton.OK);
+                        return;
+                    }
+
+                    if (parseResult)
+                        idsList.Add(parsed);
+                }
             }
 
             if (!idsList.Any())
