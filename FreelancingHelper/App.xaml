@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <converters:ToStringConverter x:Key="ToStringConverter" />
             <converters:HirerIdToStringConverter x:Key="HirerIdToStringConverter" />
+            <converters:HirerIdToBasicStringConverter x:Key="HirerIdToBasicStringConverter" />
             <converters:HasValueConverter x:Key="HasValueConverter" />
 
             <FontFamily x:Key="FontAwesomeSolid">/Fonts/FontAwesome/fa-solid-900.ttf#Font Awesome 6 Free Solid</FontFamily>

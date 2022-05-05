@@ -8,7 +8,7 @@
                   xmlns:components="clr-namespace:FreelancingHelper.Components"
                   xmlns:customControls="clr-namespace:FreelancingHelper.CustomControls"
                   Title="Day Work Details"
-                  Height="440"
+                  Height="492"
                   Width="600"
                   Background="{DynamicResource PrimarySolid}">
 
@@ -102,6 +102,15 @@
                                Foreground="{DynamicResource PrimarySolid}"/>
                     
                         <Label Content="{Binding TotalTime, Converter={StaticResource ToStringConverter}}"
+                               Margin="-10, 0, 0, 0"
+                               Foreground="{DynamicResource PrimarySolid}"/>
+                    </TextBlock>
+
+                    <TextBlock FontSize="14">
+                        <Label Content="Total Gained:"
+                               Foreground="{DynamicResource PrimarySolid}"/>
+                    
+                        <Label Content="{Binding TotalGained}"
                                Margin="-10, 0, 0, 0"
                                Foreground="{DynamicResource PrimarySolid}"/>
                     </TextBlock>

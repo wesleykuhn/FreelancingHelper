@@ -11,6 +11,7 @@ namespace FreelancingHelper.Models
         public DateTime Started { get; set; }
         public DateTime Finished { get; set; }
         public TimeSpan TotalWorkingTime { get; set; }
+        public double TotalMoneyGained { get; set; }
         public List<WorkingTime> DayWorkingTimes { get; set; }
     }
 }

@@ -150,6 +150,7 @@ namespace FreelancingHelper.ViewModels
             if (Running)
                 await StartPauseCommandExecute();
 
+            _curDayWork.TotalMoneyGained = _curHirer.SalaryPerHour * (_curDayWork.Finished - _curDayWork.Started).TotalHours;
             _curDayWork.Finished = now;
             await _dayWorkService.UpdateDayWork(_curDayWork);
 

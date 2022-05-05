@@ -67,6 +67,13 @@ namespace FreelancingHelper.ViewModels
             set => SetProperty(ref _totalTime, value);
         }
 
+        private double _totalGained;
+        public double TotalGained
+        {
+            get => _totalGained;
+            set => SetProperty(ref _totalGained, value);
+        }
+
         private ObservableCollection<WorkingTime> _workingTimes;
         public ObservableCollection<WorkingTime> WorkingTimes
         {
@@ -104,6 +111,7 @@ namespace FreelancingHelper.ViewModels
                 StartedAt = dayWork.Started;
                 FinishedAt = dayWork.Finished;
                 TotalTime = dayWork.TotalWorkingTime;
+                TotalGained = dayWork.TotalMoneyGained;
 
                 WorkingTimes = dayWork.DayWorkingTimes.Count > 0 ?
                     new ObservableCollection<WorkingTime>(dayWork.DayWorkingTimes) :
@@ -172,6 +180,9 @@ namespace FreelancingHelper.ViewModels
             var conf = MessageBox.Show("Do you really want to finish this day work?", "CONFIRMATION", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (conf != MessageBoxResult.Yes)
                 return;
+
+            if (_hirer is not null && _hirer != default(Hirer))
+                _dayWork.TotalMoneyGained = _hirer.SalaryPerHour * (_dayWork.Finished - _dayWork.Started).TotalHours;
 
             _dayWork.Finished = _dayWork.DayWorkingTimes.Last().FinishedAt;
 

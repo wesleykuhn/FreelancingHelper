@@ -72,9 +72,9 @@
                                                     Width="70"/>
 
                                     <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
-                                                    DisplayMemberBinding="{Binding Path=HirerId, Converter={StaticResource HirerIdToStringConverter}}"
+                                                    DisplayMemberBinding="{Binding Path=HirerId, Converter={StaticResource HirerIdToBasicStringConverter}}"
                                                     Header="Hirer"
-                                                    Width="366" />
+                                                    Width="268" />
 
                                     <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
                                                     DisplayMemberBinding="{Binding Path=Started, Converter={StaticResource ToStringConverter}}"
@@ -90,6 +90,11 @@
                                                     DisplayMemberBinding="{Binding Path=TotalWorkingTime, Converter={StaticResource ToStringConverter}}"
                                                     Header="Total Time"
                                                     Width="86"/>
+
+                                    <GridViewColumn HeaderContainerStyle="{StaticResource DefaultListViewHeader}"
+                                                    DisplayMemberBinding="{Binding Path=TotalMoneyGained, Converter={StaticResource ToStringConverter}}"
+                                                    Header="Total Gained"
+                                                    Width="100"/>
                                 </GridView>
                             </customControls:CustomListView.View>
                         </customControls:CustomListView>
